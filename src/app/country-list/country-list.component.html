@@ -1,0 +1,90 @@
+<div>
+  <img class="banner" src="assets/flags.jpg">
+</div>
+<div class="main-container">
+  <div class="container">
+
+    <input type="button" class="btn btn-success" value="Back" (click)="back()">
+    <p class="text-right filter-toggle"><span class="cursor-pointer" (click)="toggleFilter()">Show/Hide Filter+</span></p>
+   
+    <div [ngClass]="{'d-none':!showForm}" class="row form-container my-3">
+      <form class="col-12 row" #filter='ngForm' (ngSubmit)="submit()" ngNativeValidate>
+
+        <div class="col-12 col-md-4 mt-2">
+          <select class="w-100" required  name="filterType" [(ngModel)]="filterType">
+            <option *ngFor="let filter of filterArray" [value]="filter.keyword">{{filter.name}}</option>
+          </select>
+        </div>
+
+
+        <div class="col-12 col-md-4 mt-2">
+          <input class="w-100" required placeholder="Enter Search" type="text" [(ngModel)]="filterValue" name="filterValue">
+        </div>
+
+        <div class="col-12 col-md-4 mt-2 text-center">
+          <input [disabled]='!dataReady' class="btn btn-success" value="Search" type="submit">
+        </div>
+
+      </form>
+
+    </div>
+
+    <!--Card Area-->
+    <div *ngIf="dataReady && countries && countries.length > 0;else dataNotReady" class="row">
+
+      <p class="col-12 search-meta">Showing results for countries with {{search.searchBy}}: {{search.searchValue | uppercase}}</p>
+
+      <div *ngFor="let country of countries" class="col-12 col-md-6 col-lg-4">
+        <div *ngIf="country.name && country.name!=''" [routerLink]="['/country',country.alpha3Code]" class="card custom-card cursor-pointer">
+          <img *ngIf="country.flag && country.flag!=''" class="card-img-top" [src]="country.flag" [alt]="country.name">
+          <div class="card-body">
+            <p class="card-title text-black" *ngIf="country.name && country.name!=''">{{country.name}}
+              <span *ngIf="country.region && country.region!=''">({{country.region}})</span>
+            </p>
+            <p class="feature-title" *ngIf="country.subregion && country.subregion!=''">Sub Region:
+              <span class="feature-value">{{country.subregion}}</span>
+            </p>
+            <p class="feature-title" *ngIf="country.capital && country.capital!=''">Capital:
+              <span class="feature-value">{{country.capital}}</span>
+            </p>
+            <p class="feature-title" *ngIf="country.timezones && country.timezones.length > 0">Time Zones:
+              <span class="feature-value">{{country.timezones.join(', ')}}</span>
+            </p>
+            <p class="feature-title" *ngIf="country.languages && country.languages.length > 0">Languages:
+              <ng-container *ngFor="let language of country.languages;let last=last">
+                <span *ngIf="language.name && language.name!='' && language.iso639_1" class="feature-value link cursor-pointer" [routerLink]="['/country-list','lang',language.iso639_1]">{{language.name}}
+                  <ng-container *ngIf="language.nativeName && language.nativeName!=''"> ({{language.nativeName}})</ng-container>
+                </span>
+                <span class="feature-value" *ngIf="!last">, </span>
+              </ng-container>
+            </p>
+            <p class="feature-title" *ngIf="country.currencies && country.currencies.length > 0">Currencies:
+              <ng-container *ngFor="let currency of country.currencies;let last=last">
+                <span *ngIf="currency.name && currency.name!='' && currency.code" class="feature-value link cursor-pointer" [routerLink]="['/country-list','currency',currency.code]">{{currency.name}}
+                  <ng-container *ngIf="currency.symbol && currency.symbol!=''"> ({{currency.symbol}})</ng-container>
+                </span>
+                <span class="feature-value" *ngIf="!last">, </span>
+              </ng-container>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <ng-template #dataNotReady>
+      <div class="text-center" *ngIf='!dataReady'>
+        <div class="lds-circle custom-loader">
+          <img class="loader-img" src="../../assets/all.svg">
+        </div>
+        <p class="loader-text">Searching for countries with {{search.searchBy}}: {{search.searchValue | uppercase }}</p>
+      </div>
+      <div class="text-center" *ngIf='dataReady'>
+        <p>There is nothing here! Please cross-check your search parameters.</p>
+      </div>
+    </ng-template>
+
+
+
+  </div>
+</div>

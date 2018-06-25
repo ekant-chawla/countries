@@ -1,0 +1,123 @@
+<div *ngIf="country && country.flag && country.flag!=''" class="text-center my-3">
+  <img class="banner" [src]="country.flag" [alt]="country.name">
+</div>
+
+
+<div class="main-container">
+  <div *ngIf="dataReady && country && country.name && country.name!=''; else dataNotReady" class="container">
+    <input type="button" class="btn btn-success" value="Back" (click)="back()">
+    <h1 class="text-center">{{country.name}}</h1>
+    <hr>
+
+    <section *ngIf="(country.capital && country.capital!='' )|| (country.demonym && country.demonym!='') || 
+    (country.currencies && country.currencies.length > 0) || (country.nativeName && country.nativeName!='') || 
+    country.population || (country.altSpellings && country.altSpellings.length > 0) || (country.languages && country.languages.length > 0) || 
+    country.gini || country.population">
+
+      <h2 class="text-center">About</h2>
+      <div class="row pt-3">
+        <p *ngIf="country.capital && country.capital!=''" class="col-12 col-md-6 feature-title">Capital:
+          <span class="feature-value">{{country.capital}}</span>
+        </p>
+        <p *ngIf="country.demonym && country.demonym!=''" class="col-12 col-md-6 feature-title">Demonym:
+          <span class="feature-value">{{country.demonym}}</span>
+        </p>
+        <p *ngIf="country.currencies && country.currencies.length > 0" class="col-12 col-md-6 feature-title">Currencies:
+          <ng-container *ngFor="let currency of country.currencies;let last=last">
+            <span class="feature-value link cursor-pointer" *ngIf="currency.name && currency.name!='' && currency.code && currency.code!=''" [routerLink]="['/country-list','currency',currency.code]">{{currency.name}} ({{currency.code}})
+              <ng-container *ngIf="currency.symbol && currency.symbol!=''"> ({{currency.symbol}})</ng-container>
+            </span>
+            <span class="feature-value" *ngIf="!last">, </span>
+          </ng-container>
+        </p>
+        <p *ngIf="country.nativeName && country.nativeName!=''" class="col-12 col-md-6 feature-title">Native Names:
+          <span class="feature-value">{{country.nativeName}}</span>
+        </p>
+        <p *ngIf="country.gini" class="col-12 col-md-6 feature-title">Gini Index:
+          <span class="feature-value">{{country.gini}}</span>
+        </p>
+        <p *ngIf="country.population" class="col-12 col-md-6 feature-title">Population:
+          <span class="feature-value">{{country.population|bigNumber}}</span>
+        </p>
+        <p *ngIf="country.altSpellings && country.altSpellings.length > 0" class="col-12 feature-title">Alternate Names:
+          <span class="feature-value">{{country.altSpellings.join(', ')}}</span>
+        </p>
+        <p *ngIf="country.languages && country.languages.length > 0" class="col-12 feature-title">Languages:
+          <ng-container *ngFor="let language of country.languages;let last=last">
+            <span class="feature-value link cursor-pointer" *ngIf="language.name && language.name!='' && language.iso639_1 && language.iso639_1!=''" [routerLink]="['/country-list','lang',language.iso639_1]">{{language.name}}
+              <ng-container *ngIf="language.nativeName && language.nativeName!=''"> ({{language.nativeName}})</ng-container>
+            </span>
+            <span class="feature-value" *ngIf="!last">, </span>
+          </ng-container>
+        </p>
+      </div>
+    </section>
+    <hr>
+    <section *ngIf="(country.region && country.region!='') || (country.subregion && country.subregion!='') || 
+    country.area || (country.latlng && country.latlng.length == 2) || (country.timezones && country.timezones.length > 0) || (country.neighbours && country.neighbours.length > 0)">
+      <h2 class="text-center">Geography</h2>
+      <div class="row pt-3">
+        <p *ngIf="country.region && country.region!=''" class="col-12 col-md-6 feature-title">Region:
+          <span class="feature-value">{{country.region}}</span>
+        </p>
+        <p *ngIf="country.subregion && country.subregion!=''" class="col-12 col-md-6 feature-title">Sub Region:
+          <span class="feature-value">{{country.subregion}}</span>
+        </p>
+        <p *ngIf="country.area" class="col-12 col-md-6 feature-title">Area:
+          <span class="feature-value">{{country.area | bigNumber}} Km
+            <sup>2</sup>
+          </span>
+        </p>
+        <p *ngIf="country.latlng && country.latlng.length == 2" class="col-12 col-md-6 feature-title">Latitude Longitude:
+          <span class="feature-value">{{country.latlng | latLong }}</span>
+        </p>
+        <p *ngIf="country.timezones && country.timezones.length > 0" class="col-12 feature-title">Time Zones:
+          <span class="feature-value">{{country.timezones.join(', ')}}</span>
+        </p>
+        <p *ngIf="country.neighbours && country.neighbours.length > 0" class="col-12 feature-title">Neighbouring Countries:
+          <span class="feature-value">{{country.neighbours.join(', ')}}</span>
+        </p>
+      </div>
+    </section>
+    <hr>
+    <section *ngIf="(country.topLevelDomain && country.topLevelDomain!='') || (country.callingCodes && country.callingCodes.length > 0) || 
+      (country.regionalBlocs && country.regionalBlocs.length > 0)">
+      <h2 class="text-center">Communication</h2>
+      <div class="row pt-3">
+        <p *ngIf="country.topLevelDomain && country.topLevelDomain!=''" class="col-12 col-md-6 feature-title">Top Level Web Domain:
+          <span class="feature-value">{{country.topLevelDomain}}</span>
+        </p>
+
+        <p class="col-12 col-md-6 feature-title" *ngIf="country.callingCodes && country.callingCodes.length > 0">ISD Codes:
+          <span class="feature-value">{{country.callingCodes.join(', ')}}</span>
+        </p>
+
+        <p *ngIf="country.regionalBlocs && country.regionalBlocs.length > 0" class="col-12 feature-title">Blocs:
+          <ng-container *ngFor="let bloc of country.regionalBlocs;let last=last">
+            <span class="feature-value" *ngIf="bloc.name && bloc.name!=''">{{bloc.name}}
+              <ng-container *ngIf="bloc.acronym && bloc.acronym!=''"> ({{bloc.acronym}})</ng-container>
+            </span>
+            <span class="feature-value" *ngIf="!last">, </span>
+          </ng-container>
+        </p>
+      </div>
+
+    </section>
+
+  </div>
+
+  <ng-template #dataNotReady>
+
+    <div class="text-center" *ngIf='!dataReady'>
+      <div class="lds-circle custom-loader">
+        <img class="loader-img" src="../../assets/all.svg">
+      </div>
+      <p class="loader-text" >Getting country data...</p>
+    </div>
+
+    <div class="text-center" *ngIf='dataReady'>
+      <p>There is nothing here! Maybe the aliens erased it..</p>
+    </div>
+
+  </ng-template>
+</div>

@@ -1,0 +1,27 @@
+.region-img{
+    max-height: 160px;
+    max-width: 160px;
+}
+.all-region-img{
+    max-width: 100%;
+    max-height: 30vh;
+}
+
+.region-title{
+    margin-bottom:2.5rem;
+    font-family: inherit;
+    color: darkgreen;
+    font-size: 1.1rem;
+}
+
+.region-div{
+    transition: all 0.2s linear;
+}
+
+.region-img,.all-region-img{
+    filter:grayscale(0.8);
+}
+
+.region-img:hover,.all-region-img:hover{
+    filter:grayscale(0);
+}

@@ -1,0 +1,12 @@
+.banner{
+   max-height: 500px;
+   max-width: 100%;
+}
+
+hr{
+    border: 1px solid grey;
+}
+
+.main-container{
+    background-color: white;
+}

@@ -1,1 +1,113 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root{
+    font-size: 16px;
+    font-family: 'Aref Ruqaa', serif;
+    cursor: default;
+}
+
+h1{
+    margin: 0.5rem 0;
+    font-family: inherit;
+}
+
+h2{
+    margin-bottom: 0;
+}
+
+hr{
+    margin: 0;
+}
+
+body{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+}
+
+.container-404{
+    padding-top:20vh;
+    height: calc(100vh - 56px);
+    background: #15ab84;
+}
+
+.filter-toggle{
+    font-size: 1rem;
+    color: green;
+}
+
+.img-404{
+    max-width: 80%;
+    display: block;
+    margin:auto;
+}
+
+.text-404{
+    font-size: 2rem;
+}
+
+
+.cursor-pointer{
+    cursor: pointer !important ;
+}
+
+.main-container{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-family: inherit;
+}
+
+.navbar{
+    background-color: darkgreen;
+}
+
+.feature-title{
+    color: gray;
+    font-size: 1.1rem;
+}
+
+.feature-value{
+    color: black;
+}
+
+.link{
+    transition: all 0.2s linear;
+}
+
+.link:hover{
+    text-decoration: underline
+}
+
+
+/*Loader css*/
+
+.custom-loader .loader-img{
+    max-width: 90%;
+    margin-top:3rem;
+}
+
+.lds-circle {
+    display: block;
+    width: 10rem;
+    height: 10rem;
+    margin: auto;
+    border-radius: 50%;
+    background-color:lightblue;
+    animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+  @keyframes lds-circle {
+    0%, 100% {
+      animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+    }
+    0% {
+      transform: rotateY(0deg);
+    }
+    50% {
+      transform: rotateY(180deg);
+      animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+    }
+    100% {
+      transform: rotateY(360deg);
+    }
+  }
